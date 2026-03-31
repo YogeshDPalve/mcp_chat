@@ -26,7 +26,11 @@ assert anthropic_api_key, (
 async def main():
     claude_service = Claude(model=claude_model)
 
-    server_scripts = sys.argv[1:]
+    if "--version" in sys.argv:
+        print("MCP Chat CLI Agent v1.0.0")
+        sys.exit(0)
+
+    server_scripts = [arg for arg in sys.argv[1:] if not arg.startswith("--")]
     clients = {}
 
     command, args = (
